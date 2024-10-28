@@ -9,4 +9,6 @@ A Lofi Scraper and Player written in Python.
 
 # Configuration
 
-
+```bash
+pip install -r requirements.txt
+```

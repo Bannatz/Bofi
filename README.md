@@ -1,2 +1,12 @@
 # Bofi
-A Lofi Scraper and Player
+A Lofi Scraper and Player written in Python.
+
+# Installation
+
+
+# Usage
+
+
+# Configuration
+
+

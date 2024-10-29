@@ -9,8 +9,8 @@ def main():
 
     if arg_len == 1:
         print("Usage: main.py <argument>")
-        print("help - prints this message.\nscrape <single | album | website> - only scrapes the given second argument.\nplay [single | album]")
-        print("Example: python main.py scrape album")
+        print("Commands:\nscrape [year_filter | month_filter]\nplay - opens the music player")
+        print("Example Usage: python main.py scrape [year_filter | month_filter]")
         return
 
     if sys.argv[1] == "scrape":

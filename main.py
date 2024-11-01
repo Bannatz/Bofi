@@ -12,11 +12,10 @@ def main():
     if arg_len == 1:
         tui = TUI()
         curses.wrapper(tui.display_interface)
+
     if sys.argv[1] == "Help":
-        print("Commands: scrape - Prints the whole 'catalog'. Optional: [year_filter | month_filter]\n
-              Help - Prints this Message\n
-              player - opens the default player")
-    if sys.argv[1] == "scrape":
+        print("Commands: scrape - Prints the whole 'catalog'. Optional: [year_filter | month_filter]\nHelp - Prints this Message\nplayer - opens the default player")
+    elif sys.argv[1] == "scrape":
         # Set default values for year and month filters
         year_filter = None
         month_filter = None

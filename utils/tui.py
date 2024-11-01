@@ -14,20 +14,14 @@ class TUI:
         self.top_line = 0
 
     async def fetch_songs(self):
-        cache_file = 'song_cache.json'
-        if os.path.exists(cache_file):
-            with open(cache_file, 'r') as f:
-                self.song_list = json.load(f)
-            print("Loaded songs from cache.")
-        else:
-            extension = "mp3"
-            include_full = True
-            year_filter = None
-            month_filter = None
-            self.song_list = await self.scraper.scan(extension, include_full, year_filter, month_filter)
-            with open(cache_file, 'w') as f:
-                json.dump(self.song_list, f)
-            print("Fetched and cached songs.")
+        extension = "mp3"
+        include_full = True
+        year_filter = None
+        month_filter = None
+        self.song_list = await self.scraper.scan(extension, include_full, year_filter, month_filter)
+        with open(cache_file, 'w') as f:
+            json.dump(self.song_list, f)
+        print("Fetched and cached songs.")
 
     async def load_and_play_song(self, url):
         await self.player.load_song_from_url(url)

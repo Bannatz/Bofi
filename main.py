@@ -1,15 +1,17 @@
 import sys
 from utils.scraper import Scraper
+from utils.tui import TUI
+import curses
 import asyncio
 
-sys.tracebacklimit = 0  # Suppress all Tracebacks.
+sys.tracebacklimit = 1  # Suppress all Tracebacks.
 
 def main():
     arg_len = len(sys.argv)
 
     if arg_len == 1:
         print("Usage: main.py <argument>")
-        print("Commands:\nscrape [year_filter | month_filter]\nplay - opens the music player")
+        print("Commands:\nscrape [year_filter | month_filter]\nplayer - opens the music player")
         print("Example Usage: python main.py scrape [year_filter | month_filter]")
         return
 
@@ -25,9 +27,12 @@ def main():
             except ValueError:
                 print("Invalid Input: year_filter must be an integer.")
                 return
-
         # Run the scrape function with the provided filters
         asyncio.run(Scraper().scrape("mp3", True, year_filter=year_filter, month_filter=month_filter))
+    
+    elif sys.argv[1] == "player":
+            tui = TUI()
+            curses.wrapper(tui.display_interface)
 
 if __name__ == "__main__":
     main()

@@ -2,6 +2,7 @@ import aiohttp
 import asyncio
 from bs4 import BeautifulSoup as bs4
 from typing import List, Optional
+import json
 
 class Scraper:
     def __init__(self):
@@ -16,6 +17,17 @@ class Scraper:
                 return [link.get("href") for link in links[5:]]
 
     async def scan(self, extension: str, include_full: bool, year_filter: Optional[int] = None, month_filter: Optional[str] = None) -> List[str]:
+        # Check for cached data
+        try:
+            with open("cache.json", 'r') as f:
+                cached_data = json.load(f)
+                print("Loaded songs from cache.")
+                for song in cached_data:
+                    print(f"{song}")
+                return cached_data  # Return cached data if it exists
+        except FileNotFoundError:
+            print("No cache found, scraping...")
+
         extension = f".{extension}"
         items = await self.parse("")
 
@@ -38,6 +50,9 @@ class Scraper:
 
         tasks = [fetch_months(year) for year in years if not year_filter or year == year_filter]
         await asyncio.gather(*tasks)
+
+        with open("cache.json", "w") as f:
+            json.dump(files, f)
 
         return files
 

@@ -29,6 +29,10 @@ class TUI:
                 json.dump(self.song_list, f)
             print("Fetched and cached songs.")
 
+    async def load_and_play_song(self, url):
+        await self.player.load_song_from_url(url)
+        self.player.play_song()
+
     def display_interface(self, stdscr):
         stdscr.clear()
         curses.curs_set(0)

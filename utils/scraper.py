@@ -7,6 +7,7 @@ import json
 class Scraper:
     def __init__(self):
         self.base_url = "https://lofigirl.com/wp-content/uploads/"
+        self.volume = 50
 
     async def parse(self, path: str) -> List[str]:
         async with aiohttp.ClientSession() as session:
@@ -15,6 +16,16 @@ class Scraper:
                 soup = bs4(document, "html.parser")
                 links = soup.select("html > body > pre > a")
                 return [link.get("href") for link in links[5:]]
+
+    def set_volume(self, volume):
+        self.volume = max(0 , min(volume, 100))
+        print(f"Volume set to {self.volume}")
+
+    def increase_volume(self):
+        self.set_volume(self.volume + 5)
+    
+    def decrease_volume(self):
+        self.set_volume(self.volume -5)
 
     async def scan(self, extension: str, include_full: bool, year_filter: Optional[int] = None, month_filter: Optional[str] = None) -> List[str]:
         # Check for cached data

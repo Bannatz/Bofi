@@ -8,6 +8,7 @@ class Player:
     def __init__(self):
         self.current_song = None
         pygame.mixer.init()
+        self.volume = 0.5
 
     async def load_song_from_url(self, url):
         try:
@@ -27,12 +28,22 @@ class Player:
         except Exception as e:
             print(f"Error loading song: {e}")
 
+
+    def set_volume(self, volume):
+        self.volume = max(0 , min(volume, 1.0))
+        pygame.mixer.music.set_volume(self.volume)
+
+    def increase_volume(self):
+        self.set_volume(self.volume + 0.05)
+    
+    def decrease_volume(self):
+        self.set_volume(self.volume - 0.05)
+
     def play_song(self):
         if self.current_song:
             if pygame.mixer.music.get_busy():
                 pygame.mixer.music.stop() 
             pygame.mixer.music.play()
-            print("Playing song...")
         else:
             print("No song loaded to play.")
 
